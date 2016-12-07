@@ -148,7 +148,7 @@ public class Logger extends AbstractLogger implements Supplier<LoggerConfig> {
 
     @Override
     public boolean isEnabled(final Level level, final Marker marker, final String message, final Throwable t) {
-        return privateConfig.filter(level, marker, message, t);
+        return privateConfig.filter(level, marker, message, t);//wxc pro 2016-12-7:10:57:17 判断是否开启， 使用了Filter？这个的大背景？
     }
 
     @Override

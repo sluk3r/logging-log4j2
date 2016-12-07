@@ -78,10 +78,10 @@ public class AppenderControl extends AbstractFilterable {
      * @param event The event to process.
      */
     public void callAppender(final LogEvent event) {
-        if (shouldSkip(event)) {
+        if (shouldSkip(event)) {//wxc pro 2016-12-7:11:23:09 又来了一个Skip？考虑点？
             return;
         }
-        callAppenderPreventRecursion(event);
+        callAppenderPreventRecursion(event);//wxc pro 2016-12-7:11:23:34 这里的递归的概念何解？
     }
 
     private boolean shouldSkip(final LogEvent event) {
@@ -116,7 +116,7 @@ public class AppenderControl extends AbstractFilterable {
 
     private void callAppenderPreventRecursion(final LogEvent event) {
         try {
-            recursive.set(this);
+            recursive.set(this);//wxc pro 2016-12-7:11:24:02 貌似是排他锁的逻辑？ 这个set后， 在没有set成null前， 有什么影响？也就是set的目的是？
             callAppender0(event);
         } finally {
             recursive.set(null);
@@ -124,8 +124,8 @@ public class AppenderControl extends AbstractFilterable {
     }
 
     private void callAppender0(final LogEvent event) {
-        ensureAppenderStarted();
-        if (!isFilteredByAppender(event)) {
+        ensureAppenderStarted();//wxc pro 2016-12-7:11:24:24 start里包含了什么？看了下， 只是做了一个判断。
+        if (!isFilteredByAppender(event)) {//wxc 2016-12-7:11:25:10 又是filter。
             tryCallAppender(event);
         }
     }

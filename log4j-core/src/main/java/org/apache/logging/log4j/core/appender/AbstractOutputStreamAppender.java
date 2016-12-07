@@ -165,7 +165,7 @@ public abstract class AbstractOutputStreamAppender<M extends OutputStreamManager
     }
 
     private void tryAppend(final LogEvent event) {
-        if (Constants.ENABLE_DIRECT_ENCODERS) {
+        if (Constants.ENABLE_DIRECT_ENCODERS) {//wxc pro 2016-12-7:11:26:45 这个开关的好处是？
             directEncodeEvent(event);
         } else {
             writeByteArrayToManager(event);
@@ -173,9 +173,9 @@ public abstract class AbstractOutputStreamAppender<M extends OutputStreamManager
     }
 
     protected void directEncodeEvent(final LogEvent event) {
-        getLayout().encode(event, manager);
-        if (this.immediateFlush || event.isEndOfBatch()) {
-            manager.flush();
+        getLayout().encode(event, manager);//wxc pro 2016-12-7:11:27:17 layout的概念？
+        if (this.immediateFlush || event.isEndOfBatch()) { //wxc pro 2016-12-7:11:29:01 怎么判断出来是不是批量的最后一条了？
+            manager.flush(); //wxc pro 2016-12-7:11:27:57 ManagerFlush的时机？ flush时都做了什么？
         }
     }
 

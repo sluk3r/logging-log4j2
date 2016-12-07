@@ -56,7 +56,7 @@ public abstract class AbstractMessageFactory implements MessageFactory2, Seriali
      */
     @Override
     public Message newMessage(final String message) {
-        return new SimpleMessage(message);
+        return new SimpleMessage(message);  //wxc 2016-12-7:11:00:00 PCP模式出现了。
     }
 
     /**

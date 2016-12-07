@@ -47,6 +47,7 @@ import org.apache.logging.log4j.util.ReadOnlyStringMap;
  * </p>
  */
 public interface LogEvent extends Serializable {
+    //wxc 2016-12-7:11:20:13 LogEvent里这么多接口？
 
     /**
      * Gets the context map (also know as Mapped Diagnostic Context or MDC).

@@ -1956,7 +1956,7 @@ public abstract class AbstractLogger implements ExtendedLogger, Serializable {
     @Override
     public void logIfEnabled(final String fqcn, final Level level, final Marker marker, final String message,
             final Throwable t) {
-        if (isEnabled(level, marker, message, t)) {
+        if (isEnabled(level, marker, message, t)) { //wxc 2016-12-7:10:55:55 内置了ifEnable的判断。也想到了配置方面的Schema和机制。
             logMessage(fqcn, level, marker, message, t);
         }
     }
@@ -1985,7 +1985,7 @@ public abstract class AbstractLogger implements ExtendedLogger, Serializable {
 
     protected void logMessage(final String fqcn, final Level level, final Marker marker, final String message,
             final Throwable t) {
-        logMessageSafely(fqcn, level, marker, messageFactory.newMessage(message), t);
+        logMessageSafely(fqcn, level, marker, messageFactory.newMessage(message), t); //wxc pro 2016-12-7:10:58:53 这里Safely的体现？ 必要性是？
     }
 
     protected void logMessage(final String fqcn, final Level level, final Marker marker, final String message) {

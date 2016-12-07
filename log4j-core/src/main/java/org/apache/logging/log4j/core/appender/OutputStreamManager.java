@@ -279,7 +279,7 @@ public class OutputStreamManager extends AbstractManager implements ByteBufferDe
      * @since 2.6
      */
     protected synchronized void flushBuffer(final ByteBuffer buf) {
-        buf.flip();
+        buf.flip(); //wxc 2016-12-7:13:52:56    flip方法将Buffer从写模式切换到读模式。 这个业务含义跟flip这个词怎么关联？怎么对应？
         if (buf.limit() > 0) {
             writeToDestination(buf.array(), 0, buf.limit());
         }
@@ -290,8 +290,8 @@ public class OutputStreamManager extends AbstractManager implements ByteBufferDe
      * Flushes any buffers.
      */
     public synchronized void flush() {
-        flushBuffer(byteBuffer);
-        flushDestination();
+        flushBuffer(byteBuffer);  //wxc 2016-12-7:13:49:36 这里的synchronized的必要性。 这个应该是把buffer中内容flush到OutStream中，
+        flushDestination(); //wxc 2016-12-7:13:55:52 这里再从outStream flush到真正的目的地。
     }
 
     protected synchronized boolean closeOutputStream() {

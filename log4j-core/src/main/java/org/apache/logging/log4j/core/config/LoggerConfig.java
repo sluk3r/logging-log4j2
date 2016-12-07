@@ -398,7 +398,7 @@ public class LoggerConfig extends AbstractFilterable {
                 }
             }
         }
-        final LogEvent logEvent = logEventFactory.createEvent(loggerName, marker, fqcn, level, data, props, t);
+        final LogEvent logEvent = logEventFactory.createEvent(loggerName, marker, fqcn, level, data, props, t); //wxc pro 2016-12-7:11:19:28 这里Event跟上面Message的概念不同之处？
         try {
             log(logEvent);
         } finally {
@@ -413,7 +413,7 @@ public class LoggerConfig extends AbstractFilterable {
      * @param event The log event.
      */
     public void log(final LogEvent event) {
-        if (!isFiltered(event)) {
+        if (!isFiltered(event)) {//wxc pro 2016-12-7:11:20:49 这里再过滤是出于什么考虑？
             processLogEvent(event);
         }
     }
@@ -431,7 +431,7 @@ public class LoggerConfig extends AbstractFilterable {
     private void processLogEvent(final LogEvent event) {
         event.setIncludeLocation(isIncludeLocation());
         callAppenders(event);
-        logParent(event);
+        logParent(event); //wxc 2016-12-7:11:21:41 这里Parent的概念是指？多个Logger之间的层级关系？
     }
 
     private void logParent(final LogEvent event) {
@@ -445,7 +445,7 @@ public class LoggerConfig extends AbstractFilterable {
         final AppenderControl[] controls = appenders.get();
         //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < controls.length; i++) {
-            controls[i].callAppender(event);
+            controls[i].callAppender(event);//wxc pro 2016-12-7:11:22:48 这个应该是log的核心吧？
         }
     }
 

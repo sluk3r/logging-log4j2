@@ -118,7 +118,7 @@ public abstract class AbstractConfiguration extends AbstractFilterable implement
     private Node advertiserNode = null;
     private Object advertisement;
     private String name;
-    private ConcurrentMap<String, Appender> appenders = new ConcurrentHashMap<>();
+    private ConcurrentMap<String, Appender> appenders = new ConcurrentHashMap<>(); //wxc pro 2016-12-7:17:35:25 下面这么多跟配置相关的项， 繁多。 是把解析后的东西放到这些Map里么？
     private ConcurrentMap<String, LoggerConfig> loggerConfigs = new ConcurrentHashMap<>();
     private List<CustomLevelConfig> customLevels = Collections.emptyList();
     private final ConcurrentMap<String, String> properties = new ConcurrentHashMap<>();
@@ -130,7 +130,7 @@ public abstract class AbstractConfiguration extends AbstractFilterable implement
     private final ConfigurationScheduler configurationScheduler = new ConfigurationScheduler();
     private final WatchManager watchManager = new WatchManager(configurationScheduler);
     private AsyncLoggerConfigDisruptor asyncLoggerConfigDisruptor;
-    private NanoClock nanoClock = new DummyNanoClock();
+    private NanoClock nanoClock = new DummyNanoClock();  //wxc pro 2016-12-7:17:36:35 个Lock怎么解释？
     private final WeakReference<LoggerContext> loggerContext;
 
     /**
@@ -140,10 +140,10 @@ public abstract class AbstractConfiguration extends AbstractFilterable implement
         this.loggerContext = new WeakReference<>(loggerContext);
         // The loggerContext is null for the NullConfiguration class.
         // this.loggerContext = new WeakReference(Objects.requireNonNull(loggerContext, "loggerContext is null"));
-        this.configurationSource = Objects.requireNonNull(configurationSource, "configurationSource is null");
+        this.configurationSource = Objects.requireNonNull(configurationSource, "configurationSource is null"); //wxc 2016-12-7:17:33:31 这个方式不错， 精炼。  从业务角度来看， 这个Source什么时候用到？
         componentMap.put(Configuration.CONTEXT_PROPERTIES, properties);
-        pluginManager = new PluginManager(Node.CATEGORY);
-        rootNode = new Node();
+        pluginManager = new PluginManager(Node.CATEGORY); //wxc pro 2016-12-7:17:33:57 这个插件体系可能会有些什么？
+        rootNode = new Node();  //wxc pro 2016-12-7:17:41:33 这个Node里放些什么东西？ 什么时候用到？
         setState(State.INITIALIZING);
 
     }
@@ -205,7 +205,7 @@ public abstract class AbstractConfiguration extends AbstractFilterable implement
     }
 
     /**
-     * Initialize the configuration.
+     * Initialize the configuration. //wxc pro 2016-12-9:16:32:49 要初始化这么多东西， 太复杂亟。 IT工程不容易呐。
      */
     @Override
     public void initialize() {
@@ -235,7 +235,7 @@ public abstract class AbstractConfiguration extends AbstractFilterable implement
     }
 
     /**
-     * Start the configuration.
+     * Start the configuration.  //wxc pro 2016-12-9:15:55:08  configuration也可以start？start里做了些什么？
      */
     @Override
     public void start() {
@@ -482,9 +482,9 @@ public abstract class AbstractConfiguration extends AbstractFilterable implement
     }
 
     protected void doConfigure() {
-        preConfigure(rootNode);
+        preConfigure(rootNode); //wxc pro 2016-12-9:16:34:29 preConfigure是个什么概念？
         configurationScheduler.start();
-        if (rootNode.hasChildren() && rootNode.getChildren().get(0).getName().equalsIgnoreCase("Properties")) {
+        if (rootNode.hasChildren() && rootNode.getChildren().get(0).getName().equalsIgnoreCase("Properties")) { //wxc 2016-12-9:17:10:24 刚开始时， 这个是空的吧？
             final Node first = rootNode.getChildren().get(0);
             createConfiguration(first, null);
             if (first.getObject() != null) {
@@ -573,8 +573,8 @@ public abstract class AbstractConfiguration extends AbstractFilterable implement
 
     protected void setToDefault() {
         // LOG4J2-1176 facilitate memory leak investigation
-        setName(DefaultConfiguration.DEFAULT_NAME + "@" + Integer.toHexString(hashCode()));
-        final Layout<? extends Serializable> layout = PatternLayout.newBuilder()
+        setName(DefaultConfiguration.DEFAULT_NAME + "@" + Integer.toHexString(hashCode()));  //wxc pro 2016-12-7:17:47:21 从上面的注释可以看出来， 这个是为了在内存溢出时， 方便定位问题。 不错的实践。
+        final Layout<? extends Serializable> layout = PatternLayout.newBuilder() //wxc pro 2016-12-7:17:48:06 这个Layout代表了什么？
                 .withPattern(DefaultConfiguration.DEFAULT_PATTERN)
                 .withConfiguration(this)
                 .build();

@@ -36,7 +36,7 @@ public interface LifeCycle {
      */
     enum State {
         /** Object is in its initial state and not yet initialized. */
-        INITIALIZING,
+        INITIALIZING,   //wxc 2016-12-7:17:34:42 不错的组织方式。
         /** Initialized but not yet started. */
         INITIALIZED,
         /** In the process of starting. */

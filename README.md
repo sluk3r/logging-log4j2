@@ -32,3 +32,10 @@ Issues, bugs, and feature requests should be submitted to the
 
 Pull request on GitHub are welcome, but please open a ticket in the JIRA issue tracker first, and mention the 
 JIRA issue in the Pull Request.
+
+
+
+---------------------------------
+1. LoggerContextFactory  -> LoggerContext。
+2. LogManager又持有LoggerContext， 真正的Logger是从Logger出产生出来的。 
+3. 

@@ -68,7 +68,7 @@ public class LoggerContext extends AbstractLifeCycle
     static {
         try {
             // LOG4J2-1642 preload ExecutorServices as it is used in shutdown hook
-            LoaderUtil.loadClass(ExecutorServices.class.getName());
+            LoaderUtil.loadClass(ExecutorServices.class.getName());//wxc pro 2016-12-7:17:28:23 为啥这样三番五次地加载这些类， 是担心使用时， 没有这个类？
         } catch (final Exception e) {
             LOGGER.error("Failed to preload ExecutorServices class.", e);
         }
@@ -79,16 +79,16 @@ public class LoggerContext extends AbstractLifeCycle
      */
     public static final String PROPERTY_CONFIG = "config";
 
-    private static final Configuration NULL_CONFIGURATION = new NullConfiguration();
+    private static final Configuration NULL_CONFIGURATION = new NullConfiguration();  //wxc pro 2016-12-7:17:29:12 这里NullConfiguration， Null代表了什么？
 
-    private final LoggerRegistry<Logger> loggerRegistry = new LoggerRegistry<>();
+    private final LoggerRegistry<Logger> loggerRegistry = new LoggerRegistry<>();//wxc pro 2016-12-7:17:29:55 这个类里封装了什么？
     private final CopyOnWriteArrayList<PropertyChangeListener> propertyChangeListeners = new CopyOnWriteArrayList<>();
 
     /**
      * The Configuration is volatile to guarantee that initialization of the Configuration has completed before the
      * reference is updated.
      */
-    private volatile Configuration configuration = new DefaultConfiguration();
+    private volatile Configuration configuration = new DefaultConfiguration(); //wxc pro 2016-12-7:17:30:28 终于还是看到了这个Config了。 有可能后期会再调整么？
     private ExecutorService executorService;
     private ExecutorService executorServiceDeamons;
     private Object externalContext;
@@ -229,12 +229,12 @@ public class LoggerContext extends AbstractLifeCycle
             LOGGER.debug("Stack trace to locate invoker",
                     new Exception("Not a real error, showing stack trace to locate invoker"));
         }
-        if (configLock.tryLock()) {
+        if (configLock.tryLock()) { //wxc 2016-12-9:16:22:17 这里还是有Lock的。
             try {
-                if (this.isInitialized() || this.isStopped()) {
+                if (this.isInitialized() || this.isStopped()) {//wxc 2016-12-9:16:23:36 先看前置条件是否满足， 只有满足后， 才start
                     this.setStarting();
-                    reconfigure();
-                    if (this.configuration.isShutdownHookEnabled()) {
+                    reconfigure();//wxc 2016-12-9:16:24:18 这样， 实质上只是做了这个reconfigure的操作。
+                    if (this.configuration.isShutdownHookEnabled()) { //wxc pro 2016-12-9:16:24:57 这个是否Enable在哪设置的？
                         setUpShutdownHook();
                     }
                     this.setStarted();

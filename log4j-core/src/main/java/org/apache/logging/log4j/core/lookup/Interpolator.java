@@ -32,7 +32,7 @@ import org.apache.logging.log4j.status.StatusLogger;
 /**
  * Proxies all the other {@link StrLookup}s.
  */
-public class Interpolator extends AbstractConfigurationAwareLookup {
+public class Interpolator extends AbstractConfigurationAwareLookup {  //wxc pro 2016-12-9:17:18:54 这个Interpolator又是来做啥的？
 
     private static final String LOOKUP_KEY_WEB = "web";
 

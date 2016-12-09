@@ -40,12 +40,12 @@ public class ConfigurationScheduler extends AbstractLifeCycle {
 
     @Override
     public void start() {
-        super.start();
+        super.start(); //wxc pro 2016-12-9:17:04:14 这里没有加锁。
         if (scheduledItems > 0) {
             LOGGER.debug("{} starting {} threads", scheduledItems, SIMPLE_NAME);
             scheduledItems = Math.min(scheduledItems, MAX_SCHEDULED_ITEMS);
             executorService = new ScheduledThreadPoolExecutor(scheduledItems,
-                    Log4jThreadFactory.createDaemonThreadFactory("Scheduled"));
+                    Log4jThreadFactory.createDaemonThreadFactory("Scheduled")); //wxc 2016-12-9:16:40:03 这里创建Service
         } else {
             LOGGER.debug("{}: No scheduled items", SIMPLE_NAME);
         }

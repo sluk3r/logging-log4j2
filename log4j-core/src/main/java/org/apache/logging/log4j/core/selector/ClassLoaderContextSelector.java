@@ -108,21 +108,21 @@ public class ClassLoaderContextSelector implements ContextSelector {
         // LOG4J2-477: class loader may be null
         final ClassLoader loader = loaderOrNull != null ? loaderOrNull : ClassLoader.getSystemClassLoader();
         final String name = toContextMapKey(loader);
-        AtomicReference<WeakReference<LoggerContext>> ref = CONTEXT_MAP.get(name);
+        AtomicReference<WeakReference<LoggerContext>> ref = CONTEXT_MAP.get(name); //wxc pro 2016-12-7:17:18:01 这个Map是缓存的意思？会有多个Loader？
         if (ref == null) {
             if (configLocation == null) {
                 ClassLoader parent = loader.getParent();
                 while (parent != null) {
 
                     ref = CONTEXT_MAP.get(toContextMapKey(parent));
-                    if (ref != null) {
+                    if (ref != null) { //wxc pro 2016-12-7:17:20:10 这晨不为空的情境代表了什么意思？
                         final WeakReference<LoggerContext> r = ref.get();
                         final LoggerContext ctx = r.get();
                         if (ctx != null) {
                             return ctx;
                         }
                     }
-                    parent = parent.getParent();
+                    parent = parent.getParent(); //wxc 2016-12-7:17:21:10 这里递归地找parent， 是为了个啥？耗尽？
                     /*  In Tomcat 6 the parent of the JSP classloader is the webapp classloader which would be
                     configured by the WebAppContextListener. The WebAppClassLoader is also the ThreadContextClassLoader.
                     In JBoss 5 the parent of the JSP ClassLoader is the WebAppClassLoader which is also the

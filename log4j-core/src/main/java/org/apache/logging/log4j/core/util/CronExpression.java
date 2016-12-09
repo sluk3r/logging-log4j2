@@ -194,7 +194,7 @@ import java.util.TreeSet;
  * </ul>
  * </p>
  */
-public final class CronExpression {
+public final class CronExpression {  //wxc pro 2016-12-9:16:40:47 CronExpression这个是自己写的。 关注下单元测试。
 
     protected static final int SECOND = 0;
     protected static final int MINUTE = 1;

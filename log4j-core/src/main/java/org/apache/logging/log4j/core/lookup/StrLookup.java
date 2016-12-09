@@ -23,7 +23,7 @@ import org.apache.logging.log4j.core.LogEvent;
  * <p>
  * This class represents the simplest form of a string to string map.
  * It has a benefit over a map in that it can create the result on
- * demand based on the key.
+ * demand based on the key.  //wxc pro 2016-12-9:17:13:49 按需生成具体指什么？
  * </p>
  * <p>
  * This class comes complete with various factory methods.
@@ -34,7 +34,7 @@ import org.apache.logging.log4j.core.LogEvent;
  * key as a primary key, and looked up the value on demand from the database
  * </p>
  */
-public interface StrLookup {
+public interface StrLookup { //wxc pro 2016-12-9:17:15:07 put方面的方法省掉了？
 
     /**
      * Main plugin category for StrLookup plugins.

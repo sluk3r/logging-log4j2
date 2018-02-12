@@ -271,7 +271,7 @@ public class LoggerContext extends AbstractLifeCycle
 
     private void setUpShutdownHook() {
         if (shutdownCallback == null) {
-            final LoggerContextFactory factory = LogManager.getFactory();
+            final LoggerContextFactory factory = LogManager.getFactory();//wxc 2018-2-12:19:37:20 这个Factory只有一个？
             if (factory instanceof ShutdownCallbackRegistry) {
                 LOGGER.debug(SHUTDOWN_HOOK_MARKER, "Shutdown hook enabled. Registering a new one.");
                 try {
@@ -333,7 +333,7 @@ public class LoggerContext extends AbstractLifeCycle
      */
     @Override
     public boolean stop(final long timeout, final TimeUnit timeUnit) {
-        LOGGER.debug("Stopping LoggerContext[name={}, {}]...", getName(), this);
+        LOGGER.debug("Stopping LoggerContext[name={}, {}]...", getName(), this); //wxc pro 2018-2-12:19:38:31 stop时做些什么？
         configLock.lock();
         final boolean shutdownEs;
         final boolean shutdownEsd;
@@ -689,7 +689,7 @@ public class LoggerContext extends AbstractLifeCycle
 
     // LOG4J2-151: changed visibility from private to protected
     protected Logger newInstance(final LoggerContext ctx, final String name, final MessageFactory messageFactory) {
-        return new Logger(ctx, name, messageFactory);
+        return new Logger(ctx, name, messageFactory); //wxc pro 2018-2-12:19:44:35 这个ctx怎样一个层次关系？
     }
 
     /**

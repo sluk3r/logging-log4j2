@@ -35,7 +35,7 @@ public class AbstractLifeCycle implements LifeCycle2 {
     /**
      * Allow subclasses access to the status logger without creating another instance.
      */
-    protected static final org.apache.logging.log4j.Logger LOGGER = StatusLogger.getLogger();
+    protected static final org.apache.logging.log4j.Logger LOGGER = StatusLogger.getLogger(); //wxc 2018-2-12:19:34:24 自身的Logger怎么解决？是不是会分开？
 
     /**
      * Gets the status logger.

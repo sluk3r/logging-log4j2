@@ -62,7 +62,7 @@ public class LogManager {
     // for convenience
     private static final String FQCN = LogManager.class.getName();
 
-    private static volatile LoggerContextFactory factory;
+    private static volatile LoggerContextFactory factory;//wxc 2018-2-12:19:29:06 是不是所有的类都有Factory
 
     /**
      * Scans the classpath to find all logging implementation. Currently, only one will be used but this could be

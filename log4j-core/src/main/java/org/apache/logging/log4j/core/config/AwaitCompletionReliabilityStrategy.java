@@ -35,7 +35,7 @@ import org.apache.logging.log4j.util.Supplier;
  * ReliabilityStrategy that counts the number of threads that have started to log an event but have not completed yet,
  * and waits for these threads to finish before allowing the appenders to be stopped.
  */
-public class AwaitCompletionReliabilityStrategy implements ReliabilityStrategy {
+public class AwaitCompletionReliabilityStrategy implements ReliabilityStrategy { //wxc pro 2018-2-12:19:50:57 除了AwaitCompletion外， 还有哪些？ 是不是可以学到纯异步的方式？
     private static final int MAX_RETRIES = 3;
     private final AtomicInteger counter = new AtomicInteger();
     private final AtomicBoolean shutdown = new AtomicBoolean(false);
@@ -92,7 +92,7 @@ public class AwaitCompletionReliabilityStrategy implements ReliabilityStrategy {
     @Override
     public LoggerConfig getActiveLoggerConfig(final Supplier<LoggerConfig> next) {
         LoggerConfig result = this.loggerConfig;
-        if (!beforeLogEvent()) {
+        if (!beforeLogEvent()) { //wxc pro 2018-2-12:19:52:35 这个before代表什么意思？
             result = next.get();
             return result.getReliabilityStrategy().getActiveLoggerConfig(next);
         }

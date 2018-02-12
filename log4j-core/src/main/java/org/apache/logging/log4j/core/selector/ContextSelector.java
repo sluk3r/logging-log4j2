@@ -23,6 +23,7 @@ import org.apache.logging.log4j.core.LoggerContext;
 
 /**
  * Interface used to locate a LoggerContext.
+ * //wxc 2018-2-12:19:30:05 这个ContextSelector怎么一个Selector， 提取这个接口想解决什么问题？
  */
 public interface ContextSelector {
 

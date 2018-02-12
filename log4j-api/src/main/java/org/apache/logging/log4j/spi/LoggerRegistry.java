@@ -29,7 +29,7 @@ import org.apache.logging.log4j.message.MessageFactory;
 /**
  * Convenience class to be used by {@code LoggerContext} implementations.
  */
-public class LoggerRegistry<T extends ExtendedLogger> {
+public class LoggerRegistry<T extends ExtendedLogger> { //wxc pro 2018-2-12:19:40:13 这个Registry跟Context有什么异同？
     private static final String DEFAULT_FACTORY_KEY = AbstractLogger.DEFAULT_MESSAGE_FACTORY_CLASS.getName();
     private final MapFactory<T> factory;
     private final Map<String, Map<String, T>> map;
@@ -139,7 +139,7 @@ public class LoggerRegistry<T extends ExtendedLogger> {
     private Map<String, T> getOrCreateInnerMap(final String factoryName) {
         Map<String, T> inner = map.get(factoryName);
         if (inner == null) {
-            inner = factory.createInnerMap();
+            inner = factory.createInnerMap(); //wxc pro 2018-2-12:19:42:34 这个factory是什么时候创建的？
             map.put(factoryName, inner);
         }
         return inner;

@@ -149,7 +149,7 @@ public class Log4jContextFactory implements LoggerContextFactory, ShutdownCallba
             ctx.setExternalContext(externalContext);
         }
         if (ctx.getState() == LifeCycle.State.INITIALIZED) { //wxc 2016-12-9:15:56:04 已经线程安全了， 这里就不再加锁？
-            ctx.start();
+            ctx.start(); //wxc 2018-2-12:19:33:45 一个ctx也需要start？
         }
         return ctx;
     }

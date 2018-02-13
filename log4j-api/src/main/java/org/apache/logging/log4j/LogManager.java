@@ -191,7 +191,7 @@ public class LogManager {
      */
     public static LoggerContext getContext(final ClassLoader loader, final boolean currentContext) {
         try {
-            return factory.getContext(FQCN, loader, null, currentContext);
+            return factory.getContext(FQCN, loader, null, currentContext); //wxc 2018-2-13:10:31:38 每一个创建都有Factory， 并没有直接New出来。 看到这样的解耦， 都是对自己快要荒废了的OO设计，一个提醒与加强。  看了Factory的实现, 有SLF4J, 这也就是说, 如果Client使用了SLF4J时, 就切换到SLF4J的Factory上.待会试下SLF4J的API调用方式.
         } catch (final IllegalStateException ex) {
             LOGGER.warn(ex.getMessage() + " Using SimpleLogger");
             return new SimpleLoggerContextFactory().getContext(FQCN, loader, null, currentContext);
@@ -534,7 +534,7 @@ public class LogManager {
      * @throws UnsupportedOperationException if the calling class cannot be determined.
      */
     public static Logger getLogger() {
-        return getLogger(ReflectionUtil.getCallerClass(2));
+        return getLogger(ReflectionUtil.getCallerClass(2));  //wxc 2018-2-13:10:25:50 LogManager是从使用者的角度看的， Logger的创建之地
     }
 
     /**
@@ -548,7 +548,7 @@ public class LogManager {
      */
     public static Logger getLogger(final Class<?> clazz) {
         final Class<?> cls = callerClass(clazz);
-        return getContext(cls.getClassLoader(), false).getLogger(cls.getName());
+        return getContext(cls.getClassLoader(), false).getLogger(cls.getName());//wxc 2018-2-13:10:26:37 context是大本营。getContext跟ClassLoader怎么一个关联？貌似是每一个ClassLoader下都有一个Context， 何解？
     }
 
     /**

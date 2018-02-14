@@ -104,7 +104,7 @@ public class ClassLoaderContextSelector implements ContextSelector {
         return Collections.unmodifiableList(list);
     }
 
-    private LoggerContext locateContext(final ClassLoader loaderOrNull, final URI configLocation) {
+    private LoggerContext locateContext(final ClassLoader loaderOrNull, final URI configLocation) { //wxc 2018-2-13:15:58:01 这个loaderOrNull的命名方式不错， 标明可能会是空。
         // LOG4J2-477: class loader may be null
         final ClassLoader loader = loaderOrNull != null ? loaderOrNull : ClassLoader.getSystemClassLoader();
         final String name = toContextMapKey(loader);

@@ -243,22 +243,22 @@ public final class LoaderUtil {
      * @since 2.1
      */
     public static Collection<URL> findResources(final String resource) {
-        final Collection<UrlResource> urlResources = findUrlResources(resource);
+        final Collection<UrlResource> urlResources = findUrlResources(resource);//wxc pro 2018-2-14:14:21:25 一个文件下， 会有多个配置么？
         final Collection<URL> resources = new LinkedHashSet<>(urlResources.size());
         for (final UrlResource urlResource : urlResources) {
-            resources.add(urlResource.getUrl());
+            resources.add(urlResource.getUrl());  //wxc pro 2018-2-14:14:38:08 从URLResource转成URL是怎么一个考虑？
         }
         return resources;
     }
 
     static Collection<UrlResource> findUrlResources(final String resource) {
         final ClassLoader[] candidates = {getThreadContextClassLoader(), LoaderUtil.class.getClassLoader(),
-                GET_CLASS_LOADER_DISABLED ? null : ClassLoader.getSystemClassLoader()};
-        final Collection<UrlResource> resources = new LinkedHashSet<>();
-        for (final ClassLoader cl : candidates) {
-            if (cl != null) {
+                GET_CLASS_LOADER_DISABLED ? null : ClassLoader.getSystemClassLoader()}; //wxc pro 2018-2-14:14:22:19 这么多ClassLoader？ 另一个问题， 数组中， 可以放null么？
+        final Collection<UrlResource> resources = new LinkedHashSet<>();//wxc 2018-2-14:14:37:11 去重， 又使用Linked实现节省空间。
+        for (final ClassLoader cl : candidates) { //wxc pro 2018-2-14:14:34:47 从Debug的角度看， 都是AppClassLoader实例， 且实例也完全一样。
+            if (cl != null) { //wxc 2018-2-14:14:30:52 这里再使用是否为空来过滤下。
                 try {
-                    final Enumeration<URL> resourceEnum = cl.getResources(resource);
+                    final Enumeration<URL> resourceEnum = cl.getResources(resource); //wxc 2018-2-14:14:32:23 当值是“log4j2.component.properties”这么一个明确的文件时， 也会是UrlResource么， 对应的场景是？，
                     while (resourceEnum.hasMoreElements()) {
                         resources.add(new UrlResource(cl, resourceEnum.nextElement()));
                     }

@@ -70,7 +70,7 @@ public class LogManager {
      */
     static {
         // Shortcut binding to force a specific logging implementation.
-        final PropertiesUtil managerProps = PropertiesUtil.getProperties();
+        final PropertiesUtil managerProps = PropertiesUtil.getProperties();  //wxc pro 2018-2-14:14:17:38 这种方式不错， 程序调用上， 用接口层面， 创建信息时， 使用配置文件里的内容。
         final String factoryClassName = managerProps.getStringProperty(FACTORY_PROPERTY_NAME);
         if (factoryClassName != null) {
             try {

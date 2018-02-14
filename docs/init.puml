@@ -1,0 +1,7 @@
+@startuml
+LogManager -> LoggerContextFactory: getContext
+LoggerContext --> LoggerContext: Authentication Response
+
+LogManager -> Bob: Another authentication Request
+LogManager <-- Bob: another authentication Response
+@enduml

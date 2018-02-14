@@ -144,7 +144,7 @@ public class Log4jContextFactory implements LoggerContextFactory, ShutdownCallba
     @Override
     public LoggerContext getContext(final String fqcn, final ClassLoader loader, final Object externalContext,
                                     final boolean currentContext) {
-        final LoggerContext ctx = selector.getContext(fqcn, loader, currentContext);
+        final LoggerContext ctx = selector.getContext(fqcn, loader, currentContext); //wxc pro 2018-2-13:15:52:45 看到selector有除了ClassLoader外， 别的实现类。 在接口方法上， 体现ClassLoader是不是有些矛盾？
         if (externalContext != null && ctx.getExternalContext() == null) {
             ctx.setExternalContext(externalContext);
         }
